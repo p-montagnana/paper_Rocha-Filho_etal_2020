@@ -6,7 +6,7 @@ Scripts in R language of the analyzes that compose the paper Rocha-Filho et al. 
 - Response variables = Community and Population Ecology metrics (abundance (i.e. number of nests collected), richness, mortality caused by unknown reasons, nest parasitism, brood cell parasitism, number of emerged males, and number of emerged females)
 - Predictive variables = Landscape metrics (Landscape Resistance index (LRI), % green areas, % mixed areas, green area connectivity)
 
-## <b>Rocha-Filho, LC, Montagnana, PC, Boscolo, D and Garófalo, CA (2020),Green patches among a grey patchwork: the importance of preserving natural habitats to harbour cavity‑nesting bees and wasps (Hymenoptera) and their natural enemies in urban areas</b>
+## <b>Rocha-Filho, LC, Montagnana, PC, Boscolo, D and Garófalo, CA (2020), Green patches among a grey patchwork: the importance of preserving natural habitats to harbour cavity‑nesting bees and wasps (Hymenoptera) and their natural enemies in urban areas</b>
 ### <b>Biodiversity and Conservation</b>
 
 [Paper link](Doi: https://doi.org/10.1007/s10531-020-01985-9)<br>
