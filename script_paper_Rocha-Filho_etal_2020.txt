@@ -1,0 +1,1429 @@
+## Paula Montagnana
+
+# From Rocha-Filho, LC, Montagnana, PC, Boscolo, D and Garófalo, CA (2020),
+# Green patches among a grey patchwork: the importance of preserving natural habitats 
+# to harbour cavity‑nesting bees and wasps (Hymenoptera) and their natural enemies 
+# in urban areas, Biodiversity and Conservation, Doi: https://doi.org/10.1007/s10531-020-01985-9
+
+
+### Generalised Linear Models (GLM)
+
+# Packages
+
+require(ggplot2)
+require(bbmle)
+
+### Bee species richness
+
+r.bee.null<-glm(riq_bee~1,data=dados, family="poisson")
+r.bee.23<-glm(riq_bee~cls_23,data=dados, family="poisson")
+r.bee.25<-glm(riq_bee~cls_25,data=dados, family="poisson")
+r.bee.22<-glm(riq_bee~cls_22,data=dados, family="poisson")
+r.bee.60<-glm(riq_bee~cls_60,data=dados, family="poisson")
+r.bee.17<-glm(riq_bee~cls_17,data=dados, family="poisson")
+r.bee.14<-glm(riq_bee~cls_14,data=dados, family="poisson")
+r.bee.24<-glm(riq_bee~cls_24,data=dados, family="poisson")
+r.bee.61<-glm(riq_bee~cls_61,data=dados, family="poisson")
+r.bee.con60<-glm(riq_bee~conect_60,data=dados, family="poisson")
+r.bee.con61<-glm(riq_bee~conect_61,data=dados, family="poisson")
+r.bee.lri<-glm(riq_bee~lri,data=dados, family="poisson")
+
+# Model selection Based on second order Akaike’s Information Criterion 
+# (AICc; Burnham and Anderson, 2002)
+
+ICtab(r.bee.null,r.bee.23,r.bee.25,r.bee.22,r.bee.60,
+      r.bee.17,r.bee.14,r.bee.24,r.bee.61,r.bee.con60,r.bee.con61,r.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+tiff("bee_richness_cls14.tif",res=600,units="mm",width=100,height=85)
+g.1<-qplot(cls_14,riq_bee,data=dados, ylim = c(0,7)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Bee species richness",x=" Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+g.1
+dev.off()
+
+########
+
+tiff("bee_richness_lri.tif",res=600,units="mm",width=100,height=85)
+g.2<-qplot(lri,riq_bee,data=dados, ylim = c(0,7)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Bee species richness",x=" Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+g.2
+dev.off()
+
+
+## Bee abundance
+
+a.bee.null<-glm(abund_bee~1,data=dados, family="poisson")
+a.bee.23<-glm(abund_bee~cls_23,data=dados, family="poisson")
+a.bee.25<-glm(abund_bee~cls_25,data=dados, family="poisson")
+a.bee.22<-glm(abund_bee~cls_22,data=dados, family="poisson")
+a.bee.60<-glm(abund_bee~cls_60,data=dados, family="poisson")
+a.bee.17<-glm(abund_bee~cls_17,data=dados, family="poisson")
+a.bee.14<-glm(abund_bee~cls_14,data=dados, family="poisson")
+a.bee.24<-glm(abund_bee~cls_24,data=dados, family="poisson")
+a.bee.61<-glm(abund_bee~cls_61,data=dados, family="poisson")
+a.bee.con60<-glm(abund_bee~conect_60,data=dados, family="poisson")
+a.bee.con61<-glm(abund_bee~conect_61,data=dados, family="poisson")
+a.bee.lri<-glm(abund_bee~lri,data=dados, family="poisson")
+
+ICtab(a.bee.null,a.bee.23,a.bee.25,a.bee.22,a.bee.60,
+      a.bee.17,a.bee.14,a.bee.24,a.bee.61,a.bee.con60,a.bee.con61,a.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+tiff("bee_abundance_cls17.tif",res=600,units="mm",width=100,height=85)
+g.4<-qplot(cls_17,abund_bee,data=dados, ylim = c(0,41)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Bee abundance",x=" Squares (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+g.4
+dev.off()
+
+### Bee mortality
+
+mort.bee.null<-glm(mort_bee~1,data=dados, family="poisson")
+mort.bee.23<-glm(mort_bee~cls_23,data=dados, family="poisson")
+mort.bee.25<-glm(mort_bee~cls_25,data=dados, family="poisson")
+mort.bee.22<-glm(mort_bee~cls_22,data=dados, family="poisson")
+mort.bee.60<-glm(mort_bee~cls_60,data=dados, family="poisson")
+mort.bee.17<-glm(mort_bee~cls_17,data=dados, family="poisson")
+mort.bee.14<-glm(mort_bee~cls_14,data=dados, family="poisson")
+mort.bee.24<-glm(mort_bee~cls_24,data=dados, family="poisson")
+mort.bee.61<-glm(mort_bee~cls_61,data=dados, family="poisson")
+mort.bee.con60<-glm(mort_bee~conect_60,data=dados, family="poisson")
+mort.bee.con61<-glm(mort_bee~conect_61,data=dados, family="poisson")
+mort.bee.lri<-glm(mort_bee~lri,data=dados, family="poisson")
+
+ICtab(mort.bee.null,mort.bee.23,mort.bee.25,mort.bee.22,mort.bee.60,
+      mort.bee.17,mort.bee.14,mort.bee.24,mort.bee.61,mort.bee.con60,mort.bee.con61,
+      mort.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+
+tiff("bee_mortality_cls17.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_17, mort_bee, data=dados,ylim = c(0,53))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Bee Mortality",x="Squares (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+### Parasitism in bee nests
+
+p.n.bee.null<-glm(parasi_bee_nest~1,data=dados, family="poisson")
+p.n.bee.23<-glm(parasi_bee_nest~cls_23,data=dados, family="poisson")
+p.n.bee.25<-glm(parasi_bee_nest~cls_25,data=dados, family="poisson")
+p.n.bee.22<-glm(parasi_bee_nest~cls_22,data=dados, family="poisson")
+p.n.bee.60<-glm(parasi_bee_nest~cls_60,data=dados, family="poisson")
+p.n.bee.17<-glm(parasi_bee_nest~cls_17,data=dados, family="poisson")
+p.n.bee.14<-glm(parasi_bee_nest~cls_14,data=dados, family="poisson")
+p.n.bee.24<-glm(parasi_bee_nest~cls_24,data=dados, family="poisson")
+p.n.bee.61<-glm(parasi_bee_nest~cls_61,data=dados, family="poisson")
+p.n.bee.con60<-glm(parasi_bee_nest~conect_60,data=dados, family="poisson")
+p.n.bee.con61<-glm(parasi_bee_nest~conect_61,data=dados, family="poisson")
+p.n.bee.lri<-glm(parasi_bee_nest~lri,data=dados, family="poisson")
+
+ICtab(p.n.bee.null,p.n.bee.23,p.n.bee.25,p.n.bee.22,p.n.bee.60,
+      p.n.bee.17,p.n.bee.14,p.n.bee.24,p.n.bee.61,p.n.bee.con60,p.n.bee.con61,
+      p.n.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+
+tiff("parasitism_bee_nest_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_bee_nest, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized bee nests",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("parasitism_bee_nest_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, parasi_bee_nest, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized bee nests",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("parasitism_bee_nest_cls17.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_17, parasi_bee_nest, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized bee nests",x="Squares (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("parasitism_bee_nest_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, parasi_bee_nest, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized bee nests",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+### Parasitism in bee cells
+
+p.c.bee.null<-glm(parasi_bee_cell~1,data=dados, family="poisson")
+p.c.bee.23<-glm(parasi_bee_cell~cls_23,data=dados, family="poisson")
+p.c.bee.25<-glm(parasi_bee_cell~cls_25,data=dados, family="poisson")
+p.c.bee.22<-glm(parasi_bee_cell~cls_22,data=dados, family="poisson")
+p.c.bee.60<-glm(parasi_bee_cell~cls_60,data=dados, family="poisson")
+p.c.bee.17<-glm(parasi_bee_cell~cls_17,data=dados, family="poisson")
+p.c.bee.14<-glm(parasi_bee_cell~cls_14,data=dados, family="poisson")
+p.c.bee.24<-glm(parasi_bee_cell~cls_24,data=dados, family="poisson")
+p.c.bee.61<-glm(parasi_bee_cell~cls_61,data=dados, family="poisson")
+p.c.bee.con60<-glm(parasi_bee_cell~conect_60,data=dados, family="poisson")
+p.c.bee.con61<-glm(parasi_bee_cell~conect_61,data=dados, family="poisson")
+p.c.bee.lri<-glm(parasi_bee_cell~lri,data=dados, family="poisson")
+
+ICtab(p.c.bee.null,p.c.bee.23,p.c.bee.25,p.c.bee.22,p.c.bee.60,
+      p.c.bee.17,p.c.bee.14,p.c.bee.24,p.c.bee.61,p.c.bee.con60,p.c.bee.con61,
+      p.c.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+#### Figure
+
+tiff("parasitism_bee_cells_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_bee_cell, data=dados,ylim = c(0,30))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized bee brood cells",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+#### Male bees
+
+### Parasitism in bee cells
+
+m.bee.null<-glm(male_bee~1,data=dados, family="poisson")
+m.bee.23<-glm(male_bee~cls_23,data=dados, family="poisson")
+m.bee.25<-glm(male_bee~cls_25,data=dados, family="poisson")
+m.bee.22<-glm(male_bee~cls_22,data=dados, family="poisson")
+m.bee.60<-glm(male_bee~cls_60,data=dados, family="poisson")
+m.bee.17<-glm(male_bee~cls_17,data=dados, family="poisson")
+m.bee.14<-glm(male_bee~cls_14,data=dados, family="poisson")
+m.bee.24<-glm(male_bee~cls_24,data=dados, family="poisson")
+m.bee.61<-glm(male_bee~cls_61,data=dados, family="poisson")
+m.bee.con60<-glm(male_bee~conect_60,data=dados, family="poisson")
+m.bee.con61<-glm(male_bee~conect_61,data=dados, family="poisson")
+m.bee.lri<-glm(male_bee~lri,data=dados, family="poisson")
+
+ICtab(m.bee.null,m.bee.23,m.bee.25,m.bee.22,m.bee.60,
+      m.bee.17,m.bee.14,m.bee.24,m.bee.61,m.bee.con60,m.bee.con61,
+      m.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+#### Figure
+
+tiff("male_bee_conect60.tif",res=600,units="mm",width=100,height=85)
+qplot(conect_60, male_bee, data=dados,ylim = c(0,25))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of male bees",x="Green area Connectivity (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+### Female bees
+
+f.bee.null<-glm(female_bee~1,data=dados, family="poisson")
+f.bee.23<-glm(female_bee~cls_23,data=dados, family="poisson")
+f.bee.25<-glm(female_bee~cls_25,data=dados, family="poisson")
+f.bee.22<-glm(female_bee~cls_22,data=dados, family="poisson")
+f.bee.60<-glm(female_bee~cls_60,data=dados, family="poisson")
+f.bee.17<-glm(female_bee~cls_17,data=dados, family="poisson")
+f.bee.14<-glm(female_bee~cls_14,data=dados, family="poisson")
+f.bee.24<-glm(female_bee~cls_24,data=dados, family="poisson")
+f.bee.61<-glm(female_bee~cls_61,data=dados, family="poisson")
+f.bee.con60<-glm(female_bee~conect_60,data=dados, family="poisson")
+f.bee.con61<-glm(female_bee~conect_61,data=dados, family="poisson")
+f.bee.lri<-glm(female_bee~lri,data=dados, family="poisson")
+
+ICtab(f.bee.null,f.bee.23,f.bee.25,f.bee.22,f.bee.60,
+      f.bee.17,f.bee.14,f.bee.24,f.bee.61,f.bee.con60,f.bee.con61,
+      f.bee.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+####Gr?fico
+
+tiff("female_bee_conect60.tif",res=600,units="mm",width=100,height=85)
+qplot(conect_60, female_bee, data=dados,ylim = c(0,11))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of female bees",x="Green area Connectivity (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("female_bee_cls17.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_17, female_bee, data=dados,ylim = c(0,11))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of female bees",x="Squares (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("female_bee_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, female_bee, data=dados,ylim = c(0,11))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of female bees",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+##################################################################################################################
+##### Wasps
+
+### Wasp species richness
+
+r.wasp.null<-glm(riq_wasp~1,data=dados, family="poisson")
+r.wasp.23<-glm(riq_wasp~cls_23,data=dados, family="poisson")
+r.wasp.25<-glm(riq_wasp~cls_25,data=dados, family="poisson")
+r.wasp.22<-glm(riq_wasp~cls_22,data=dados, family="poisson")
+r.wasp.60<-glm(riq_wasp~cls_60,data=dados, family="poisson")
+r.wasp.17<-glm(riq_wasp~cls_17,data=dados, family="poisson")
+r.wasp.14<-glm(riq_wasp~cls_14,data=dados, family="poisson")
+r.wasp.24<-glm(riq_wasp~cls_24,data=dados, family="poisson")
+r.wasp.61<-glm(riq_wasp~cls_61,data=dados, family="poisson")
+r.wasp.con60<-glm(riq_wasp~conect_60,data=dados, family="poisson")
+r.wasp.con61<-glm(riq_wasp~conect_61,data=dados, family="poisson")
+r.wasp.lri<-glm(riq_wasp~lri,data=dados, family="poisson")
+
+ICtab(r.wasp.null,r.wasp.23,r.wasp.25,r.wasp.22,r.wasp.60,
+      r.wasp.17,r.wasp.14,r.wasp.24,r.wasp.61,r.wasp.con60,r.wasp.con61,r.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+tiff("wasp_richness_cls25.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_25, riq_wasp, data=dados,ylim = c(0,11))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Wasp species richness",x="Streets/Roads (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+### Wasp abundance
+
+a.wasp.null<-glm(abund_wasp~1,data=dados, family="poisson")
+a.wasp.23<-glm(abund_wasp~cls_23,data=dados, family="poisson")
+a.wasp.25<-glm(abund_wasp~cls_25,data=dados, family="poisson")
+a.wasp.22<-glm(abund_wasp~cls_22,data=dados, family="poisson")
+a.wasp.60<-glm(abund_wasp~cls_60,data=dados, family="poisson")
+a.wasp.17<-glm(abund_wasp~cls_17,data=dados, family="poisson")
+a.wasp.14<-glm(abund_wasp~cls_14,data=dados, family="poisson")
+a.wasp.24<-glm(abund_wasp~cls_24,data=dados, family="poisson")
+a.wasp.61<-glm(abund_wasp~cls_61,data=dados, family="poisson")
+a.wasp.con60<-glm(abund_wasp~conect_60,data=dados, family="poisson")
+a.wasp.con61<-glm(abund_wasp~conect_61,data=dados, family="poisson")
+a.wasp.lri<-glm(abund_wasp~lri,data=dados, family="poisson")
+
+ICtab(a.wasp.null,a.wasp.23,a.wasp.25,a.wasp.22,a.wasp.60,
+      a.wasp.17,a.wasp.14,a.wasp.24,a.wasp.61,a.wasp.con60,a.wasp.con61,a.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+tiff("wasp_abundance_cls25.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, abund_wasp, data=dados,ylim = c(0,101))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Wasp abundance",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("wasp_abundance_cls23.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_23, abund_wasp, data=dados,ylim = c(0,101))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Wasp abundance",x="Grasslands (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+###### Wasp mortality
+
+mort.wasp.null<-glm(mort_wasp~1,data=dados, family="poisson")
+mort.wasp.23<-glm(mort_wasp~cls_23,data=dados, family="poisson")
+mort.wasp.25<-glm(mort_wasp~cls_25,data=dados, family="poisson")
+mort.wasp.22<-glm(mort_wasp~cls_22,data=dados, family="poisson")
+mort.wasp.60<-glm(mort_wasp~cls_60,data=dados, family="poisson")
+mort.wasp.17<-glm(mort_wasp~cls_17,data=dados, family="poisson")
+mort.wasp.14<-glm(mort_wasp~cls_14,data=dados, family="poisson")
+mort.wasp.24<-glm(mort_wasp~cls_24,data=dados, family="poisson")
+mort.wasp.61<-glm(mort_wasp~cls_61,data=dados, family="poisson")
+mort.wasp.con60<-glm(mort_wasp~conect_60,data=dados, family="poisson")
+mort.wasp.con61<-glm(mort_wasp~conect_61,data=dados, family="poisson")
+mort.wasp.lri<-glm(mort_wasp~lri,data=dados, family="poisson")
+
+ICtab(mort.wasp.null,mort.wasp.23,mort.wasp.25,mort.wasp.22,mort.wasp.60,
+      mort.wasp.17,mort.wasp.14,mort.wasp.24,mort.wasp.61,mort.wasp.con60,mort.wasp.con61,mort.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+tiff("wasp_mortality_cls23.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_23, mort_wasp, data=dados,ylim = c(0,61))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Wasp mortality",x="Grasslands (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("wasp_mortality_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, mort_wasp, data=dados,ylim = c(0,61))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Wasp mortality",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+###Wasp nest parasitism
+
+p.n.wasp.null<-glm(parasi_wasp_nest~1,data=dados, family="poisson")
+p.n.wasp.23<-glm(parasi_wasp_nest~cls_23,data=dados, family="poisson")
+p.n.wasp.25<-glm(parasi_wasp_nest~cls_25,data=dados, family="poisson")
+p.n.wasp.22<-glm(parasi_wasp_nest~cls_22,data=dados, family="poisson")
+p.n.wasp.60<-glm(parasi_wasp_nest~cls_60,data=dados, family="poisson")
+p.n.wasp.17<-glm(parasi_wasp_nest~cls_17,data=dados, family="poisson")
+p.n.wasp.14<-glm(parasi_wasp_nest~cls_14,data=dados, family="poisson")
+p.n.wasp.24<-glm(parasi_wasp_nest~cls_24,data=dados, family="poisson")
+p.n.wasp.61<-glm(parasi_wasp_nest~cls_61,data=dados, family="poisson")
+p.n.wasp.con60<-glm(parasi_wasp_nest~conect_60,data=dados, family="poisson")
+p.n.wasp.con61<-glm(parasi_wasp_nest~conect_61,data=dados, family="poisson")
+p.n.wasp.lri<-glm(parasi_wasp_nest~lri,data=dados, family="poisson")
+
+ICtab(p.n.wasp.null,p.n.wasp.23,p.n.wasp.25,p.n.wasp.22,p.n.wasp.60,
+      p.n.wasp.17,p.n.wasp.14,p.n.wasp.24,p.n.wasp.61,p.n.wasp.con60,p.n.wasp.con61,p.n.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+##Figure
+
+tiff("parasitism_wasp_nest_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_wasp_nest, data=dados,ylim = c(0,15))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized wasp nests",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("parasitism_wasp_nest_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, parasi_wasp_nest, data=dados,ylim = c(0,15))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized wasp nests",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+###Parasitism in wasp cells
+
+p.c.wasp.null<-glm(parasi_wasp_cell~1,data=dados, family="poisson")
+p.c.wasp.23<-glm(parasi_wasp_cell~cls_23,data=dados, family="poisson")
+p.c.wasp.25<-glm(parasi_wasp_cell~cls_25,data=dados, family="poisson")
+p.c.wasp.22<-glm(parasi_wasp_cell~cls_22,data=dados, family="poisson")
+p.c.wasp.60<-glm(parasi_wasp_cell~cls_60,data=dados, family="poisson")
+p.c.wasp.17<-glm(parasi_wasp_cell~cls_17,data=dados, family="poisson")
+p.c.wasp.14<-glm(parasi_wasp_cell~cls_14,data=dados, family="poisson")
+p.c.wasp.24<-glm(parasi_wasp_cell~cls_24,data=dados, family="poisson")
+p.c.wasp.61<-glm(parasi_wasp_cell~cls_61,data=dados, family="poisson")
+p.c.wasp.con60<-glm(parasi_wasp_cell~conect_60,data=dados, family="poisson")
+p.c.wasp.con61<-glm(parasi_wasp_cell~conect_61,data=dados, family="poisson")
+p.c.wasp.lri<-glm(parasi_wasp_cell~lri,data=dados, family="poisson")
+
+ICtab(p.c.wasp.null,p.c.wasp.23,p.c.wasp.25,p.c.wasp.22,p.c.wasp.60,
+      p.c.wasp.17,p.c.wasp.14,p.c.wasp.24,p.c.wasp.61,p.c.wasp.con60,p.c.wasp.con61,p.c.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+##Figure
+
+tiff("parasitism_wasp_cells_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_wasp_cell, data=dados,ylim = c(0,20))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized wasp brood cells",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("parasitism_wasp_cells_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, parasi_wasp_cell, data=dados,ylim = c(0,20))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized wasp brood cells",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+## Wasp males number
+
+m.wasp.null<-glm(male_wasp~1,data=dados, family="poisson")
+m.wasp.23<-glm(male_wasp~cls_23,data=dados, family="poisson")
+m.wasp.25<-glm(male_wasp~cls_25,data=dados, family="poisson")
+m.wasp.22<-glm(male_wasp~cls_22,data=dados, family="poisson")
+m.wasp.60<-glm(male_wasp~cls_60,data=dados, family="poisson")
+m.wasp.17<-glm(male_wasp~cls_17,data=dados, family="poisson")
+m.wasp.14<-glm(male_wasp~cls_14,data=dados, family="poisson")
+m.wasp.24<-glm(male_wasp~cls_24,data=dados, family="poisson")
+m.wasp.61<-glm(male_wasp~cls_61,data=dados, family="poisson")
+m.wasp.con60<-glm(male_wasp~conect_60,data=dados, family="poisson")
+m.wasp.con61<-glm(male_wasp~conect_61,data=dados, family="poisson")
+m.wasp.lri<-glm(male_wasp~lri,data=dados, family="poisson")
+
+ICtab(m.wasp.null,m.wasp.23,m.wasp.25,m.wasp.22,m.wasp.60,
+      m.wasp.17,m.wasp.14,m.wasp.24,m.wasp.61,m.wasp.con60,m.wasp.con61,m.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("wasp_males_cls23.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_23, male_wasp, data=dados,ylim = c(0,150))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of male wasps",x="Grasslands (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+### Wasp females
+
+f.wasp.null<-glm(female_wasp~1,data=dados, family="poisson")
+f.wasp.23<-glm(female_wasp~cls_23,data=dados, family="poisson")
+f.wasp.25<-glm(female_wasp~cls_25,data=dados, family="poisson")
+f.wasp.22<-glm(female_wasp~cls_22,data=dados, family="poisson")
+f.wasp.60<-glm(female_wasp~cls_60,data=dados, family="poisson")
+f.wasp.17<-glm(female_wasp~cls_17,data=dados, family="poisson")
+f.wasp.14<-glm(female_wasp~cls_14,data=dados, family="poisson")
+f.wasp.24<-glm(female_wasp~cls_24,data=dados, family="poisson")
+f.wasp.61<-glm(female_wasp~cls_61,data=dados, family="poisson")
+f.wasp.con60<-glm(female_wasp~conect_60,data=dados, family="poisson")
+f.wasp.con61<-glm(female_wasp~conect_61,data=dados, family="poisson")
+f.wasp.lri<-glm(female_wasp~lri,data=dados, family="poisson")
+
+ICtab(f.wasp.null,f.wasp.23,f.wasp.25,f.wasp.22,f.wasp.60,
+      f.wasp.17,f.wasp.14,f.wasp.24,f.wasp.61,f.wasp.con60,f.wasp.con61,f.wasp.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("wasp_females_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, female_wasp, data=dados,ylim = c(0,80))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of female wasps",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+## Natural enemy species richness
+
+r.para.null<-glm(riq_parasi~1,data=dados, family="poisson")
+r.para.23<-glm(riq_parasi~cls_23,data=dados, family="poisson")
+r.para.25<-glm(riq_parasi~cls_25,data=dados, family="poisson")
+r.para.22<-glm(riq_parasi~cls_22,data=dados, family="poisson")
+r.para.60<-glm(riq_parasi~cls_60,data=dados, family="poisson")
+r.para.17<-glm(riq_parasi~cls_17,data=dados, family="poisson")
+r.para.14<-glm(riq_parasi~cls_14,data=dados, family="poisson")
+r.para.24<-glm(riq_parasi~cls_24,data=dados, family="poisson")
+r.para.61<-glm(riq_parasi~cls_61,data=dados, family="poisson")
+r.para.con60<-glm(riq_parasi~conect_60,data=dados, family="poisson")
+r.para.con61<-glm(riq_parasi~conect_61,data=dados, family="poisson")
+r.para.lri<-glm(riq_parasi~lri,data=dados, family="poisson")
+r.para.host<-glm(riq_parasi~abund_host,data=dados, family="poisson")
+
+ICtab(r.para.null,r.para.23,r.para.25,r.para.22,r.para.60,
+      r.para.17,r.para.14,r.para.24,r.para.61,r.para.con60,r.para.con61,r.para.lri,r.para.host,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("ne_richness_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, riq_parasi, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite species richness",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("ne_richness_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, riq_parasi, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite species richness",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("ne_richness_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, riq_parasi, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite species richness",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("ne_richness_cls17.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_17, riq_parasi, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite species richness",x="Squares (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+### Natural enemy abundance
+
+a.para.null<-glm(abund_parasi~1,data=dados, family="poisson")
+a.para.23<-glm(abund_parasi~cls_23,data=dados, family="poisson")
+a.para.25<-glm(abund_parasi~cls_25,data=dados, family="poisson")
+a.para.22<-glm(abund_parasi~cls_22,data=dados, family="poisson")
+a.para.60<-glm(abund_parasi~cls_60,data=dados, family="poisson")
+a.para.17<-glm(abund_parasi~cls_17,data=dados, family="poisson")
+a.para.14<-glm(abund_parasi~cls_14,data=dados, family="poisson")
+a.para.24<-glm(abund_parasi~cls_24,data=dados, family="poisson")
+a.para.61<-glm(abund_parasi~cls_61,data=dados, family="poisson")
+a.para.con60<-glm(abund_parasi~conect_60,data=dados, family="poisson")
+a.para.con61<-glm(abund_parasi~conect_61,data=dados, family="poisson")
+a.para.lri<-glm(abund_parasi~lri,data=dados, family="poisson")
+a.para.host<-glm(abund_parasi~abund_host,data=dados, family="poisson")
+
+ICtab(a.para.null,a.para.23,a.para.25,a.para.22,a.para.60,
+      a.para.17,a.para.14,a.para.24,a.para.61,a.para.con60,a.para.con61,a.para.lri,a.para.host,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+###Figure
+
+tiff("ne_abundance_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, abund_parasi, data=dados,ylim = c(0,20))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite abundance",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("ne_abundance_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, abund_parasi, data=dados,ylim = c(0,20))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite abundance",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("ne_abundance_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, abund_parasi, data=dados,ylim = c(0,20))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite abundance",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+### Natural enemy mortality
+
+mort.para.null<-glm(mort_parasi~1,data=dados, family="poisson")
+mort.para.23<-glm(mort_parasi~cls_23,data=dados, family="poisson")
+mort.para.25<-glm(mort_parasi~cls_25,data=dados, family="poisson")
+mort.para.22<-glm(mort_parasi~cls_22,data=dados, family="poisson")
+mort.para.60<-glm(mort_parasi~cls_60,data=dados, family="poisson")
+mort.para.17<-glm(mort_parasi~cls_17,data=dados, family="poisson")
+mort.para.14<-glm(mort_parasi~cls_14,data=dados, family="poisson")
+mort.para.24<-glm(mort_parasi~cls_24,data=dados, family="poisson")
+mort.para.61<-glm(mort_parasi~cls_61,data=dados, family="poisson")
+mort.para.con60<-glm(mort_parasi~conect_60,data=dados, family="poisson")
+mort.para.con61<-glm(mort_parasi~conect_61,data=dados, family="poisson")
+mort.para.lri<-glm(mort_parasi~lri,data=dados, family="poisson")
+
+ICtab(mort.para.null,mort.para.23,mort.para.25,mort.para.22,mort.para.60,
+      mort.para.17,mort.para.14,mort.para.24,mort.para.61,mort.para.con60,mort.para.con61,mort.para.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("ne_mortality_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, mort_parasi, data=dados,ylim = c(0,3))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasite mortality",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+### Total species richness
+
+r.total.null<-glm(riq_total~1,data=dados, family="poisson")
+r.total.23<-glm(riq_total~cls_23,data=dados, family="poisson")
+r.total.25<-glm(riq_total~cls_25,data=dados, family="poisson")
+r.total.22<-glm(riq_total~cls_22,data=dados, family="poisson")
+r.total.60<-glm(riq_total~cls_60,data=dados, family="poisson")
+r.total.17<-glm(riq_total~cls_17,data=dados, family="poisson")
+r.total.14<-glm(riq_total~cls_14,data=dados, family="poisson")
+r.total.24<-glm(riq_total~cls_24,data=dados, family="poisson")
+r.total.61<-glm(riq_total~cls_61,data=dados, family="poisson")
+r.total.con60<-glm(riq_total~conect_60,data=dados, family="poisson")
+r.total.con61<-glm(riq_total~conect_61,data=dados, family="poisson")
+r.total.lri<-glm(riq_total~lri,data=dados, family="poisson")
+
+ICtab(r.total.null,r.total.23,r.total.25,r.total.22,r.total.60,
+      r.total.17,r.total.14,r.total.24,r.total.61,r.total.con60,r.total.con61,r.total.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("total_richness_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, riq_total, data=dados,ylim = c(0,25))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Total species richness",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+###Total abundance
+
+a.total.null<-glm(abund_total~1,data=dados, family="poisson")
+a.total.23<-glm(abund_total~cls_23,data=dados, family="poisson")
+a.total.25<-glm(abund_total~cls_25,data=dados, family="poisson")
+a.total.22<-glm(abund_total~cls_22,data=dados, family="poisson")
+a.total.60<-glm(abund_total~cls_60,data=dados, family="poisson")
+a.total.17<-glm(abund_total~cls_17,data=dados, family="poisson")
+a.total.14<-glm(abund_total~cls_14,data=dados, family="poisson")
+a.total.24<-glm(abund_total~cls_24,data=dados, family="poisson")
+a.total.61<-glm(abund_total~cls_61,data=dados, family="poisson")
+a.total.con60<-glm(abund_total~conect_60,data=dados, family="poisson")
+a.total.con61<-glm(abund_total~conect_61,data=dados, family="poisson")
+a.total.lri<-glm(abund_total~lri,data=dados, family="poisson")
+
+ICtab(a.total.null,a.total.23,a.total.25,a.total.22,a.total.60,
+      a.total.17,a.total.14,a.total.24,a.total.61,a.total.con60,a.total.con61,a.total.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+tiff("total_abundance_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, abund_total, data=dados,ylim = c(0,150))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Total abundance",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+###Total mortality
+
+
+mort.total.null<-glm(mort_total~1,data=dados, family="poisson")
+mort.total.23<-glm(mort_total~cls_23,data=dados, family="poisson")
+mort.total.25<-glm(mort_total~cls_25,data=dados, family="poisson")
+mort.total.22<-glm(mort_total~cls_22,data=dados, family="poisson")
+mort.total.60<-glm(mort_total~cls_60,data=dados, family="poisson")
+mort.total.17<-glm(mort_total~cls_17,data=dados, family="poisson")
+mort.total.14<-glm(mort_total~cls_14,data=dados, family="poisson")
+mort.total.24<-glm(mort_total~cls_24,data=dados, family="poisson")
+mort.total.61<-glm(mort_total~cls_61,data=dados, family="poisson")
+mort.total.con60<-glm(mort_total~conect_60,data=dados, family="poisson")
+mort.total.con61<-glm(mort_total~conect_61,data=dados, family="poisson")
+mort.total.lri<-glm(mort_total~lri,data=dados, family="poisson")
+
+ICtab(mort.total.null,mort.total.23,mort.total.25,mort.total.22,mort.total.60,
+      mort.total.17,mort.total.14,mort.total.24,mort.total.61,mort.total.con60,mort.total.con61,
+      mort.total.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure 
+
+tiff("total_mortality_cls23.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_23, mort_total, data=dados,ylim = c(0,61))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Total mortality",x="Grasslands (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("total_mortality_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, mort_total, data=dados,ylim = c(0,61))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Total mortality",x="Green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("total_mortality_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, mort_total, data=dados,ylim = c(0,61))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Total mortality",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+### Total nest parasitism
+
+p.n.total.null<-glm(parasi_nest_total~1,data=dados, family="poisson")
+p.n.total.23<-glm(parasi_nest_total~cls_23,data=dados, family="poisson")
+p.n.total.25<-glm(parasi_nest_total~cls_25,data=dados, family="poisson")
+p.n.total.22<-glm(parasi_nest_total~cls_22,data=dados, family="poisson")
+p.n.total.60<-glm(parasi_nest_total~cls_60,data=dados, family="poisson")
+p.n.total.17<-glm(parasi_nest_total~cls_17,data=dados, family="poisson")
+p.n.total.14<-glm(parasi_nest_total~cls_14,data=dados, family="poisson")
+p.n.total.24<-glm(parasi_nest_total~cls_24,data=dados, family="poisson")
+p.n.total.61<-glm(parasi_nest_total~cls_61,data=dados, family="poisson")
+p.n.total.con60<-glm(parasi_nest_total~conect_60,data=dados, family="poisson")
+p.n.total.con61<-glm(parasi_nest_total~conect_61,data=dados, family="poisson")
+p.n.total.lri<-glm(parasi_nest_total~lri,data=dados, family="poisson")
+
+ICtab(p.n.total.null,p.n.total.23,p.n.total.25,p.n.total.22,p.n.total.60,
+      p.n.total.17,p.n.total.14,p.n.total.24,p.n.total.61,p.n.total.con60,p.n.total.con61,
+      p.n.total.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("total_nest_parasitism_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_nest_total, data=dados,ylim = c(0,26))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized total nests",x="Green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+tiff("total_nest_parasitism_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, parasi_nest_total, data=dados,ylim = c(0,26))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized total nests",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+tiff("total_nest_parasitism_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, parasi_nest_total, data=dados,ylim = c(0,26))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized total nests",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=13.5,family="Arial"))
+dev.off()
+
+#### Total cell parasitism
+
+p.c.total.null<-glm(parasi_cell_total~1,data=dados, family="poisson")
+p.c.total.23<-glm(parasi_cell_total~cls_23,data=dados, family="poisson")
+p.c.total.25<-glm(parasi_cell_total~cls_25,data=dados, family="poisson")
+p.c.total.22<-glm(parasi_cell_total~cls_22,data=dados, family="poisson")
+p.c.total.60<-glm(parasi_cell_total~cls_60,data=dados, family="poisson")
+p.c.total.17<-glm(parasi_cell_total~cls_17,data=dados, family="poisson")
+p.c.total.14<-glm(parasi_cell_total~cls_14,data=dados, family="poisson")
+p.c.total.24<-glm(parasi_cell_total~cls_24,data=dados, family="poisson")
+p.c.total.61<-glm(parasi_cell_total~cls_61,data=dados, family="poisson")
+p.c.total.con60<-glm(parasi_cell_total~conect_60,data=dados, family="poisson")
+p.c.total.con61<-glm(parasi_cell_total~conect_61,data=dados, family="poisson")
+p.c.total.lri<-glm(parasi_cell_total~lri,data=dados, family="poisson")
+
+ICtab(p.c.total.null,p.c.total.23,p.c.total.25,p.c.total.22,p.c.total.60,
+      p.c.total.17,p.c.total.14,p.c.total.24,p.c.total.61,p.c.total.con60,p.c.total.con61,
+      p.c.total.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+##Figure
+
+tiff("total_cell_parasitism_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_cell_total, data=dados,ylim = c(0,50))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized total brood cells",x="Green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=14,family="Arial"))
+dev.off()
+
+############################################################################################################
+##########Wasp functional groups#######################################################################
+############################################################################################################
+
+
+### Caterpillar-hunting wasp species richness
+
+r.cater.null<-glm(riq_wasp_cater~1,data=dados, family="poisson")
+r.cater.23<-glm(riq_wasp_cater~cls_23,data=dados, family="poisson")
+r.cater.25<-glm(riq_wasp_cater~cls_25,data=dados, family="poisson")
+r.cater.22<-glm(riq_wasp_cater~cls_22,data=dados, family="poisson")
+r.cater.60<-glm(riq_wasp_cater~cls_60,data=dados, family="poisson")
+r.cater.17<-glm(riq_wasp_cater~cls_17,data=dados, family="poisson")
+r.cater.14<-glm(riq_wasp_cater~cls_14,data=dados, family="poisson")
+r.cater.24<-glm(riq_wasp_cater~cls_24,data=dados, family="poisson")
+r.cater.61<-glm(riq_wasp_cater~cls_61,data=dados, family="poisson")
+r.cater.con60<-glm(riq_wasp_cater~conect_60,data=dados, family="poisson")
+r.cater.con61<-glm(riq_wasp_cater~conect_61,data=dados, family="poisson")
+r.cater.lri<-glm(riq_wasp_cater~lri,data=dados, family="poisson")
+
+ICtab(r.cater.null,r.cater.23,r.cater.25,r.cater.22,r.cater.60,
+      r.cater.17,r.cater.14,r.cater.24,r.cater.61,r.cater.con60,r.cater.con61,r.cater.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+
+tiff("caterpillar_richness_lri.tif",res=600,units="mm",width=100,height=85)
+g.r.c<-qplot(lri,riq_wasp_cater,data=dados, ylim = c(0,4)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Eumenine wasp species richness",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+g.r.c
+dev.off()
+
+########
+
+tiff("caterpillar_richness_cls60.tif",res=600,units="mm",width=100,height=85)
+g.r.c2<-qplot(cls_60,riq_wasp_cater,data=dados, ylim = c(0,4)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Eumenine wasp species richness",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+g.r.c2
+dev.off()
+
+
+## Caterpillar-hunting wasp abundance
+
+a.cater.null<-glm(abund_wasp_cater~1,data=dados, family="poisson")
+a.cater.23<-glm(abund_wasp_cater~cls_23,data=dados, family="poisson")
+a.cater.25<-glm(abund_wasp_cater~cls_25,data=dados, family="poisson")
+a.cater.22<-glm(abund_wasp_cater~cls_22,data=dados, family="poisson")
+a.cater.60<-glm(abund_wasp_cater~cls_60,data=dados, family="poisson")
+a.cater.17<-glm(abund_wasp_cater~cls_17,data=dados, family="poisson")
+a.cater.14<-glm(abund_wasp_cater~cls_14,data=dados, family="poisson")
+a.cater.24<-glm(abund_wasp_cater~cls_24,data=dados, family="poisson")
+a.cater.61<-glm(abund_wasp_cater~cls_61,data=dados, family="poisson")
+a.cater.con60<-glm(abund_wasp_cater~conect_60,data=dados, family="poisson")
+a.cater.con61<-glm(abund_wasp_cater~conect_61,data=dados, family="poisson")
+a.cater.lri<-glm(abund_wasp_cater~lri,data=dados, family="poisson")
+
+ICtab(a.cater.null,a.cater.23,a.cater.25,a.cater.22,a.cater.60,
+      a.cater.17,a.cater.14,a.cater.24,a.cater.61,a.cater.con60,a.cater.con61,a.cater.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+
+tiff("caterpillar_abundance_cls23.tif",res=600,units="mm",width=100,height=85)
+g.a.c<-qplot(cls_17,abund_bee,data=dados, ylim = c(0,19)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Eumenine wasp abundance",x=" Lawns (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+g.a.c
+dev.off()
+
+###Caterpillar-hunting wasp mortality
+
+mort.cater.null<-glm(mort_wasp_cater~1,data=dados, family="poisson")
+mort.cater.23<-glm(mort_wasp_cater~cls_23,data=dados, family="poisson")
+mort.cater.25<-glm(mort_wasp_cater~cls_25,data=dados, family="poisson")
+mort.cater.22<-glm(mort_wasp_cater~cls_22,data=dados, family="poisson")
+mort.cater.60<-glm(mort_wasp_cater~cls_60,data=dados, family="poisson")
+mort.cater.17<-glm(mort_wasp_cater~cls_17,data=dados, family="poisson")
+mort.cater.14<-glm(mort_wasp_cater~cls_14,data=dados, family="poisson")
+mort.cater.24<-glm(mort_wasp_cater~cls_24,data=dados, family="poisson")
+mort.cater.61<-glm(mort_wasp_cater~cls_61,data=dados, family="poisson")
+mort.cater.con60<-glm(mort_wasp_cater~conect_60,data=dados, family="poisson")
+mort.cater.con61<-glm(mort_wasp_cater~conect_61,data=dados, family="poisson")
+mort.cater.lri<-glm(mort_wasp_cater~lri,data=dados, family="poisson")
+
+ICtab(mort.cater.null,mort.cater.23,mort.cater.25,mort.cater.22,mort.cater.60,
+      mort.cater.17,mort.cater.14,mort.cater.24,mort.cater.61,mort.cater.con60,mort.cater.con61,
+      mort.cater.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+##Figure
+
+tiff("caterpillar_mortality_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, mort_wasp_cater, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Eumenine wasp Mortality",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+###Caterpillar-hunting wasp nest parasitism 
+
+p.n.cater.null<-glm(parasi_nest_wasp_cater~1,data=dados, family="poisson")
+p.n.cater.23<-glm(parasi_nest_wasp_cater~cls_23,data=dados, family="poisson")
+p.n.cater.25<-glm(parasi_nest_wasp_cater~cls_25,data=dados, family="poisson")
+p.n.cater.22<-glm(parasi_nest_wasp_cater~cls_22,data=dados, family="poisson")
+p.n.cater.60<-glm(parasi_nest_wasp_cater~cls_60,data=dados, family="poisson")
+p.n.cater.17<-glm(parasi_nest_wasp_cater~cls_17,data=dados, family="poisson")
+p.n.cater.14<-glm(parasi_nest_wasp_cater~cls_14,data=dados, family="poisson")
+p.n.cater.24<-glm(parasi_nest_wasp_cater~cls_24,data=dados, family="poisson")
+p.n.cater.61<-glm(parasi_nest_wasp_cater~cls_61,data=dados, family="poisson")
+p.n.cater.con60<-glm(parasi_nest_wasp_cater~conect_60,data=dados, family="poisson")
+p.n.cater.con61<-glm(parasi_nest_wasp_cater~conect_61,data=dados, family="poisson")
+p.n.cater.lri<-glm(parasi_nest_wasp_cater~lri,data=dados, family="poisson")
+
+ICtab(p.n.cater.null,p.n.cater.23,p.n.cater.25,p.n.cater.22,p.n.cater.60,
+      p.n.cater.17,p.n.cater.14,p.n.cater.24,p.n.cater.61,p.n.cater.con60,p.n.cater.con61,
+      p.n.cater.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+##Figure 
+
+tiff("caterpillar_nest_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, parasi_nest_wasp_cater, data=dados,ylim = c(0,5))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized eumenine wasp nests",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+tiff("caterpillar_nest_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, parasi_nest_wasp_cater, data=dados,ylim = c(0,5))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized eumenine wasp nests",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+tiff("caterpillar_nest_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_nest_wasp_cater, data=dados,ylim = c(0,5))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized eumenine wasp nests",x="Green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+
+### Caterpillar-hunting wasp cell parasitism
+
+p.c.cater.null<-glm(parasi_cell_wasps_cater~1,data=dados, family="poisson")
+p.c.cater.23<-glm(parasi_cell_wasps_cater~cls_23,data=dados, family="poisson")
+p.c.cater.25<-glm(parasi_cell_wasps_cater~cls_25,data=dados, family="poisson")
+p.c.cater.22<-glm(parasi_cell_wasps_cater~cls_22,data=dados, family="poisson")
+p.c.cater.60<-glm(parasi_cell_wasps_cater~cls_60,data=dados, family="poisson")
+p.c.cater.17<-glm(parasi_cell_wasps_cater~cls_17,data=dados, family="poisson")
+p.c.cater.14<-glm(parasi_cell_wasps_cater~cls_14,data=dados, family="poisson")
+p.c.cater.24<-glm(parasi_cell_wasps_cater~cls_24,data=dados, family="poisson")
+p.c.cater.61<-glm(parasi_cell_wasps_cater~cls_61,data=dados, family="poisson")
+p.c.cater.con60<-glm(parasi_cell_wasps_cater~conect_60,data=dados, family="poisson")
+p.c.cater.con61<-glm(parasi_cell_wasps_cater~conect_61,data=dados, family="poisson")
+p.c.cater.lri<-glm(parasi_cell_wasps_cater~lri,data=dados, family="poisson")
+
+ICtab(p.c.cater.null,p.c.cater.23,p.c.cater.25,p.c.cater.22,p.c.cater.60,
+      p.c.cater.17,p.c.cater.14,p.c.cater.24,p.c.cater.61,p.c.cater.con60,p.c.cater.con61,
+      p.c.cater.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+#### Figure
+
+tiff("caterpillar_cell_cls22.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_22, parasi_cell_wasps_cater, data=dados,ylim = c(0,14))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized eumenine wasp brood cells",x="Neighbourhoods with few green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+tiff("caterpillar_cell_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, parasi_cell_wasps_cater, data=dados,ylim = c(0,14))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized eumenine wasp brood cells",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+tiff("caterpillar_cell_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, parasi_cell_wasps_cater, data=dados,ylim = c(0,14))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized eumenine wasp brood cells",x="Green areas (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+####Caterpillar-hunting wasp males
+
+m.cater.null<-glm(male_wasp_cater~1,data=dados, family="poisson")
+m.cater.23<-glm(male_wasp_cater~cls_23,data=dados, family="poisson")
+m.cater.25<-glm(male_wasp_cater~cls_25,data=dados, family="poisson")
+m.cater.22<-glm(male_wasp_cater~cls_22,data=dados, family="poisson")
+m.cater.60<-glm(male_wasp_cater~cls_60,data=dados, family="poisson")
+m.cater.17<-glm(male_wasp_cater~cls_17,data=dados, family="poisson")
+m.cater.14<-glm(male_wasp_cater~cls_14,data=dados, family="poisson")
+m.cater.24<-glm(male_wasp_cater~cls_24,data=dados, family="poisson")
+m.cater.61<-glm(male_wasp_cater~cls_61,data=dados, family="poisson")
+m.cater.con60<-glm(male_wasp_cater~conect_60,data=dados, family="poisson")
+m.cater.con61<-glm(male_wasp_cater~conect_61,data=dados, family="poisson")
+m.cater.lri<-glm(male_wasp_cater~lri,data=dados, family="poisson")
+
+ICtab(m.cater.null,m.cater.23,m.cater.25,m.cater.22,m.cater.60,
+      m.cater.17,m.cater.14,m.cater.24,m.cater.61,m.cater.con60,m.cater.con61,
+      m.cater.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+####Figure
+
+tiff("caterpillar_males_cls60.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_60, male_wasp_cater, data=dados,ylim = c(0,25))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of male eumenine wasps",x="Green area (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+tiff("caterpillar_males_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, male_wasp_cater, data=dados,ylim = c(0,25))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of male eumenine wasps",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+
+###Caterpillar-hunting wasp females
+
+f.cater.null<-glm(female_wasp_cater~1,data=dados, family="poisson")
+f.cater.23<-glm(female_wasp_cater~cls_23,data=dados, family="poisson")
+f.cater.25<-glm(female_wasp_cater~cls_25,data=dados, family="poisson")
+f.cater.22<-glm(female_wasp_cater~cls_22,data=dados, family="poisson")
+f.cater.60<-glm(female_wasp_cater~cls_60,data=dados, family="poisson")
+f.cater.17<-glm(female_wasp_cater~cls_17,data=dados, family="poisson")
+f.cater.14<-glm(female_wasp_cater~cls_14,data=dados, family="poisson")
+f.cater.24<-glm(female_wasp_cater~cls_24,data=dados, family="poisson")
+f.cater.61<-glm(female_wasp_cater~cls_61,data=dados, family="poisson")
+f.cater.con60<-glm(female_wasp_cater~conect_60,data=dados, family="poisson")
+f.cater.con61<-glm(female_wasp_cater~conect_61,data=dados, family="poisson")
+f.cater.lri<-glm(female_wasp_cater~lri,data=dados, family="poisson")
+
+ICtab(f.cater.null,f.cater.23,f.cater.25,f.cater.22,f.cater.60,
+      f.cater.17,f.cater.14,f.cater.24,f.cater.61,f.cater.con60,f.cater.con61,
+      f.cater.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+####Figure
+
+tiff("caterpillar_females_conect60.tif",res=600,units="mm",width=100,height=85)
+qplot(conect_60, female_wasp_cater, data=dados,ylim = c(0,13))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of female eumenine wasps",x="Green area Connectivity (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+
+###########################################################################
+
+### Spider-hunting wasp species richness
+
+r.spider.null<-glm(riq_wasp_spider~1,data=dados, family="poisson")
+r.spider.23<-glm(riq_wasp_spider~cls_23,data=dados, family="poisson")
+r.spider.25<-glm(riq_wasp_spider~cls_25,data=dados, family="poisson")
+r.spider.22<-glm(riq_wasp_spider~cls_22,data=dados, family="poisson")
+r.spider.60<-glm(riq_wasp_spider~cls_60,data=dados, family="poisson")
+r.spider.17<-glm(riq_wasp_spider~cls_17,data=dados, family="poisson")
+r.spider.14<-glm(riq_wasp_spider~cls_14,data=dados, family="poisson")
+r.spider.24<-glm(riq_wasp_spider~cls_24,data=dados, family="poisson")
+r.spider.61<-glm(riq_wasp_spider~cls_61,data=dados, family="poisson")
+r.spider.con60<-glm(riq_wasp_spider~conect_60,data=dados, family="poisson")
+r.spider.con61<-glm(riq_wasp_spider~conect_61,data=dados, family="poisson")
+r.spider.lri<-glm(riq_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(r.spider.null,r.spider.23,r.spider.25,r.spider.22,r.spider.60,
+      r.spider.17,r.spider.14,r.spider.24,r.spider.61,r.spider.con60,
+      r.spider.con61,r.spider.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+### Figure
+tiff("spider_richness_cls25.tif",res=600,units="mm",width=100,height=85)
+g.r.s<-qplot(cls_25,riq_wasp_spider,data=dados, ylim = c(0,5)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Spider-hunter wasp species richness",x=" Street/Roads (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+g.r.s
+dev.off()
+
+tiff("spider_richness_conec60.tif",res=600,units="mm",width=100,height=85)
+g.r.s2<-qplot(conect_60,riq_wasp_spider,data=dados, ylim = c(0,5)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Spider-hunter wasp species richness",x=" Green area connectivity (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+g.r.s2
+dev.off()
+
+##Spider-hunting wasp abundance
+
+a.spider.null<-glm(abund_wasp_spider~1,data=dados, family="poisson")
+a.spider.23<-glm(abund_wasp_spider~cls_23,data=dados, family="poisson")
+a.spider.25<-glm(abund_wasp_spider~cls_25,data=dados, family="poisson")
+a.spider.22<-glm(abund_wasp_spider~cls_22,data=dados, family="poisson")
+a.spider.60<-glm(abund_wasp_spider~cls_60,data=dados, family="poisson")
+a.spider.17<-glm(abund_wasp_spider~cls_17,data=dados, family="poisson")
+a.spider.14<-glm(abund_wasp_spider~cls_14,data=dados, family="poisson")
+a.spider.24<-glm(abund_wasp_spider~cls_24,data=dados, family="poisson")
+a.spider.61<-glm(abund_wasp_spider~cls_61,data=dados, family="poisson")
+a.spider.con60<-glm(abund_wasp_spider~conect_60,data=dados, family="poisson")
+a.spider.con61<-glm(abund_wasp_spider~conect_61,data=dados, family="poisson")
+a.spider.lri<-glm(abund_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(a.spider.null,a.spider.23,a.spider.25,a.spider.22,a.spider.60,
+      a.spider.17,a.spider.14,a.spider.24,a.spider.61,a.spider.con60,
+      a.spider.con61,a.spider.lri,
+      type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+## Figure
+tiff("spider_richness_cls23.tif",res=600,units="mm",width=100,height=85)
+g.a.s<-qplot(cls_17,abund_wasp_spider,data=dados, ylim = c(0,98)) + 
+  geom_point(size=2, colour = "darkgrey") + 
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Spider-hunter wasp abundance",x=" Lawns (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+g.a.s
+dev.off()
+
+
+###Spider-hunting wasp mortality
+
+mort.spider.null<-glm(mort_wasp_spider~1,data=dados, family="poisson")
+mort.spider.23<-glm(mort_wasp_spider~cls_23,data=dados, family="poisson")
+mort.spider.25<-glm(mort_wasp_spider~cls_25,data=dados, family="poisson")
+mort.spider.22<-glm(mort_wasp_spider~cls_22,data=dados, family="poisson")
+mort.spider.60<-glm(mort_wasp_spider~cls_60,data=dados, family="poisson")
+mort.spider.17<-glm(mort_wasp_spider~cls_17,data=dados, family="poisson")
+mort.spider.14<-glm(mort_wasp_spider~cls_14,data=dados, family="poisson")
+mort.spider.24<-glm(mort_wasp_spider~cls_24,data=dados, family="poisson")
+mort.spider.61<-glm(mort_wasp_spider~cls_61,data=dados, family="poisson")
+mort.spider.con60<-glm(mort_wasp_spider~conect_60,data=dados, family="poisson")
+mort.spider.con61<-glm(mort_wasp_spider~conect_61,data=dados, family="poisson")
+mort.spider.lri<-glm(mort_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(mort.spider.null,mort.spider.23,mort.spider.25,mort.spider.22,
+      mort.spider.60,mort.spider.17,mort.spider.14,mort.spider.24,
+      mort.spider.61,mort.spider.con60,mort.spider.con61,
+      mort.cater.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+##Figure
+
+tiff("spider_mortality_lri.tif",res=600,units="mm",width=100,height=85)
+qplot(lri, mort_wasp_spider, data=dados,ylim = c(0,59))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Spider-hunter wasp mortality",x="Landscape Resistance Index")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+###Spider-hunting wasp nest parasitism
+
+p.n.spider.null<-glm(parasi_nest_wasp_spider~1,data=dados, family="poisson")
+p.n.spider.23<-glm(parasi_nest_wasp_spider~cls_23,data=dados, family="poisson")
+p.n.spider.25<-glm(parasi_nest_wasp_spider~cls_25,data=dados, family="poisson")
+p.n.spider.22<-glm(parasi_nest_wasp_spider~cls_22,data=dados, family="poisson")
+p.n.spider.60<-glm(parasi_nest_wasp_spider~cls_60,data=dados, family="poisson")
+p.n.spider.17<-glm(parasi_nest_wasp_spider~cls_17,data=dados, family="poisson")
+p.n.spider.14<-glm(parasi_nest_wasp_spider~cls_14,data=dados, family="poisson")
+p.n.spider.24<-glm(parasi_nest_wasp_spider~cls_24,data=dados, family="poisson")
+p.n.spider.61<-glm(parasi_nest_wasp_spider~cls_61,data=dados, family="poisson")
+p.n.spider.con60<-glm(parasi_nest_wasp_spider~conect_60,data=dados, family="poisson")
+p.n.spider.con61<-glm(parasi_nest_wasp_spider~conect_61,data=dados, family="poisson")
+p.n.spider.lri<-glm(parasi_nest_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(p.n.spider.null,p.n.spider.23,p.n.spider.25,p.n.spider.22,p.n.spider.60,
+      p.n.spider.17,p.n.spider.14,p.n.spider.24,p.n.spider.61,p.n.spider.con60,
+      p.n.spider.con61,p.n.spider.lri,type="AICc", delta=T, nobs=length(11),
+      weights=T, base=T)
+
+## Figure
+
+tiff("spider_nest_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, parasi_nest_wasp_spider, data=dados,ylim = c(0,6))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized spider-hunter wasp nest",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+
+###Spider-hunting wasp cell parasitism
+
+p.c.spider.null<-glm(parasi_cell_wasp_spider~1,data=dados, family="poisson")
+p.c.spider.23<-glm(parasi_cell_wasp_spider~cls_23,data=dados, family="poisson")
+p.c.spider.25<-glm(parasi_cell_wasp_spider~cls_25,data=dados, family="poisson")
+p.c.spider.22<-glm(parasi_cell_wasp_spider~cls_22,data=dados, family="poisson")
+p.c.spider.60<-glm(parasi_cell_wasp_spider~cls_60,data=dados, family="poisson")
+p.c.spider.17<-glm(parasi_cell_wasp_spider~cls_17,data=dados, family="poisson")
+p.c.spider.14<-glm(parasi_cell_wasp_spider~cls_14,data=dados, family="poisson")
+p.c.spider.24<-glm(parasi_cell_wasp_spider~cls_24,data=dados, family="poisson")
+p.c.spider.61<-glm(parasi_cell_wasp_spider~cls_61,data=dados, family="poisson")
+p.c.spider.con60<-glm(parasi_cell_wasp_spider~conect_60,data=dados, family="poisson")
+p.c.spider.con61<-glm(parasi_cell_wasp_spider~conect_61,data=dados, family="poisson")
+p.c.spider.lri<-glm(parasi_cell_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(p.c.spider.null,p.c.spider.23,p.c.spider.25,p.c.spider.22,
+      p.c.spider.60,p.c.spider.17,p.c.spider.14,p.c.spider.24,p.c.spider.61,
+      p.c.spider.con60,p.c.spider.con61,p.c.spider.lri,type="AICc",
+      delta=T, nobs=length(11), weights=T, base=T)
+
+####Figure
+
+tiff("spider_cell_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, parasi_cell_wasp_spider, data=dados,ylim = c(0,8))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Parasitized spider-hunter wasp brood cells",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=11,family="Arial"))
+dev.off()
+
+
+####Spider-hunting wasp males
+
+m.spider.null<-glm(male_wasp_spider~1,data=dados, family="poisson")
+m.spider.23<-glm(male_wasp_spider~cls_23,data=dados, family="poisson")
+m.spider.25<-glm(male_wasp_spider~cls_25,data=dados, family="poisson")
+m.spider.22<-glm(male_wasp_spider~cls_22,data=dados, family="poisson")
+m.spider.60<-glm(male_wasp_spider~cls_60,data=dados, family="poisson")
+m.spider.17<-glm(male_wasp_spider~cls_17,data=dados, family="poisson")
+m.spider.14<-glm(male_wasp_spider~cls_14,data=dados, family="poisson")
+m.spider.24<-glm(male_wasp_spider~cls_24,data=dados, family="poisson")
+m.spider.61<-glm(male_wasp_spider~cls_61,data=dados, family="poisson")
+m.spider.con60<-glm(male_wasp_spider~conect_60,data=dados, family="poisson")
+m.spider.con61<-glm(male_wasp_spider~conect_61,data=dados, family="poisson")
+m.spider.lri<-glm(male_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(m.spider.null,m.spider.23,m.spider.25,m.spider.22,m.spider.60,
+      m.spider.17,m.spider.14,m.spider.24,m.spider.61,m.spider.con60,
+      m.spider.con61,m.spider.lri,type="AICc", delta=T, nobs=length(11), weights=T, base=T)
+
+#### Figure
+
+tiff("spider_males_cls23.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_23, male_wasp_spider, data=dados,ylim = c(0,147))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of male spider-hunter wasps",x="Lawns (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
+
+
+###Spider-hunting wasp females
+
+f.spider.null<-glm(female_wasp_spider~1,data=dados, family="poisson")
+f.spider.23<-glm(female_wasp_spider~cls_23,data=dados, family="poisson")
+f.spider.25<-glm(female_wasp_spider~cls_25,data=dados, family="poisson")
+f.spider.22<-glm(female_wasp_spider~cls_22,data=dados, family="poisson")
+f.spider.60<-glm(female_wasp_spider~cls_60,data=dados, family="poisson")
+f.spider.17<-glm(female_wasp_spider~cls_17,data=dados, family="poisson")
+f.spider.14<-glm(female_wasp_spider~cls_14,data=dados, family="poisson")
+f.spider.24<-glm(female_wasp_spider~cls_24,data=dados, family="poisson")
+f.spider.61<-glm(female_wasp_spider~cls_61,data=dados, family="poisson")
+f.spider.con60<-glm(female_wasp_spider~conect_60,data=dados, family="poisson")
+f.spider.con61<-glm(female_wasp_spider~conect_61,data=dados, family="poisson")
+f.spider.lri<-glm(female_wasp_spider~lri,data=dados, family="poisson")
+
+ICtab(f.spider.null,f.spider.23,f.spider.25,f.spider.22,f.spider.60,
+      f.spider.17,f.spider.14,f.spider.24,f.spider.61,f.spider.con60,
+      f.spider.con61,f.spider.lri,type="AICc", delta=T, nobs=length(11),
+      weights=T, base=T)
+
+####Figure
+
+tiff("spider_females_cls14.tif",res=600,units="mm",width=100,height=85)
+qplot(cls_14, female_wasp_spider, data=dados,ylim = c(0,72))+
+  geom_point(size=2, colour="darkgray") +
+  stat_smooth(method="glm", se = F, colour="black")+
+  labs(y="Number of female spider-hunter wasp",x="Forested street islands/roundabouts (%)")+
+  theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),
+        panel.background=element_blank(),axis.line=element_line(colour="black"),
+        text=element_text(size=12,family="Arial"))
+dev.off()
